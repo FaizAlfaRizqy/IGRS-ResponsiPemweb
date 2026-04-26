@@ -21,11 +21,7 @@ SOURCE_DIR = Path(__file__).resolve().parent / 'source'
 
 @app.route("/")
 def index():
-    try:
-        return render_template('index.html')
-    except Exception as e:
-        return f"ERROR: {e}"
-
+    return "HELLO HIDUP"
 
 @app.route('/source/<path:filename>')
 def source_assets(filename):
