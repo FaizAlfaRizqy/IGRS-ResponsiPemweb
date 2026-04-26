@@ -53,17 +53,6 @@ python -m venv .venv
 
 ### 3. Aktifkan virtual environment
 
-#### Windows PowerShell
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-#### Windows CMD
-
-```cmd
-.venv\Scripts\activate.bat
-```
 
 #### macOS / Linux
 
