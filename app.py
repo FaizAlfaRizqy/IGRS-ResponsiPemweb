@@ -12,6 +12,8 @@ from modules.fuzzy_logic import (
 )
 from modules.expert_system import run_expert_system, rating_to_index, RATING_SCALE
 
+print("APP LOADED SUCCESSFULLY")
+
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 SOURCE_DIR = Path(__file__).resolve().parent / 'source'
