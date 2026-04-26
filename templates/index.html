@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart IGRS Analyzer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <main class="landing" id="home-page">
+    <aside class="left-rail">
+      <img src="/source/FAIZ-logo.png" alt="FAIZ Logo" class="faiz-logo" />
+      <nav class="side-nav">
+        <a href="#" class="is-active" data-nav="home">Home</a>
+        <a href="#" data-nav="aspect">How to Use</a>
+        <a href="#" data-nav="aspect">How it works</a>
+      </nav>
+    </aside>
+
+    <section class="center-image" aria-hidden="true">
+      <img src="/source/home-image.png" alt="Gaming Illustration" />
+    </section>
+
+    <section class="right-panel">
+      <div class="hero-brand">
+        <img src="/source/IGRS-logo.png" alt="IGRS Logo" class="igrs-logo" />
+      </div>
+
+      <form class="game-search" id="game-search-form">
+        <input
+          id="game-name"
+          type="text"
+          placeholder="Enter game name"
+          aria-label="Enter game name"
+        />
+        <button type="submit">Rate</button>
+      </form>
+
+      <p class="landing-copy">
+        Indonesian Game Rating System (IGRS) adalah sistem klasifikasi untuk menentukan batas usia pemain
+        berdasarkan konten game yang mencakup aspek seperti kekerasan, horor, bahasa, dan unsur seksual
+      </p>
+    </section>
+  </main>
+
+  <main class="landing hidden" id="aspect-page">
+    <aside class="left-rail">
+      <img src="/source/FAIZ-logo.png" alt="FAIZ Logo" class="faiz-logo" />
+      <nav class="side-nav">
+        <a href="#" data-nav="home">Home</a>
+        <a href="#" class="is-active" data-nav="aspect">How to Use</a>
+        <a href="#" data-nav="aspect">How it works</a>
+      </nav>
+    </aside>
+
+    <section class="center-image" aria-hidden="true">
+      <img src="/source/aspek1-image.png" alt="Aspek 1 Illustration" />
+    </section>
+
+    <section class="aspect-panel">
+      <h1 id="aspect-heading">Kekerasan</h1>
+
+      <form id="analyzer-form" class="aspect-form reveal">
+        <div class="option-list">
+          <label class="option-item"><input type="checkbox" name="violence" value="blood" /><span>Ada darah</span></label>
+          <label class="option-item"><input type="checkbox" name="violence" value="weapon" /><span>Ada senjata</span></label>
+          <label class="option-item"><input type="checkbox" name="violence" value="gore" /><span>Ada gore</span></label>
+          <label class="option-item"><input type="checkbox" name="violence" value="disturbing" /><span>Ada disturbing imagery</span></label>
+        </div>
+
+        <div class="intensity-wrap" id="violence-intensity-wrap">
+          <h2>Intensity</h2>
+          <input type="range" id="violence-intensity" name="violence-intensity" min="1" max="10" value="5" />
+          <div class="range-labels">
+            <strong>1</strong>
+            <strong>10</strong>
+          </div>
+          <strong id="violence-intensity-value" class="current-value">5</strong>
+        </div>
+
+        <button type="submit" class="next-btn" id="analyze-btn">1</button>
+        <div id="loading" class="loading hidden">
+          <span class="spinner"></span> Analyzing...
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <section id="result-page" class="hidden reveal result-section">
+    <div class="card result-hero">
+      <p class="eyebrow">Hasil Analisis IGRS</p>
+      <h2 id="final-rating">-</h2>
+      <p id="result-explanation"></p>
+    </div>
+
+    <div class="result-grid">
+      <article class="card">
+        <h3>Skor Intensitas Aspek</h3>
+        <ul id="aspect-scores" class="list"></ul>
+      </article>
+
+      <article class="card">
+        <h3>Derajat Keanggotaan Fuzzy</h3>
+        <div id="fuzzy-memberships" class="membership-box"></div>
+      </article>
+
+      <article class="card">
+        <h3>Rules Terpicu</h3>
+        <ul id="triggered-rules" class="list"></ul>
+      </article>
+    </div>
+
+    <div class="actions card">
+      <button id="back-btn" type="button" class="btn-secondary">Kembali ke Input</button>
+    </div>
+  </section>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
