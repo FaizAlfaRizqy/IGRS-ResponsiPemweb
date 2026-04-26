@@ -12,6 +12,7 @@ const aspectHeading = document.getElementById('aspect-heading');
 
 const form = document.getElementById('analyzer-form');
 const backBtn = document.getElementById('back-btn');
+const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 const loadingEl = document.getElementById('loading');
 
@@ -86,6 +87,17 @@ function setupEvents() {
     });
   }
 
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      if (currentAspectIndex === 0) {
+        return;
+      }
+
+      currentAspectIndex -= 1;
+      renderCurrentAspect();
+    });
+  }
+
   if (backBtn) {
     backBtn.addEventListener('click', () => {
       showPage('aspect');
@@ -123,6 +135,10 @@ function renderCurrentAspect() {
 
   if (nextBtn) {
     nextBtn.textContent = currentAspectIndex === aspectOrder.length - 1 ? 'Analyze' : 'Next';
+  }
+
+  if (prevBtn) {
+    prevBtn.disabled = currentAspectIndex === 0;
   }
 }
 

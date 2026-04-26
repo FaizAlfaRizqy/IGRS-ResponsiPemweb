@@ -182,10 +182,11 @@ p {
 }
 
 .aspect-card {
-  padding: 18px;
-  background: rgba(255, 255, 255, 0.35);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 14px;
+  padding: 0 0 16px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .aspect-card h2 {
@@ -260,17 +261,32 @@ p {
   color: var(--text);
 }
 
-.next-btn {
+.wizard-actions {
   grid-column: 1 / -1;
-  width: 108px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.prev-btn,
+.next-btn {
+  min-width: 108px;
   height: 108px;
   margin-top: auto;
-  margin-left: auto;
   border: 0;
-  background: #9db3ad;
-  color: #e9f1ef;
   font-size: 24px;
   cursor: pointer;
+}
+
+.prev-btn {
+  background: #c8c8cb;
+  color: #2f2f33;
+}
+
+.next-btn {
+  background: #9db3ad;
+  color: #e9f1ef;
 }
 
 .next-btn:disabled {
@@ -455,6 +471,7 @@ p {
     font-size: 20px;
   }
 
+  .prev-btn,
   .next-btn {
     width: 86px;
     height: 86px;
@@ -533,6 +550,10 @@ p {
 
   .aspect-form {
     grid-template-columns: 1fr;
+  }
+
+  .wizard-actions {
+    justify-content: space-between;
   }
 
   .aspect-panel h1 {
