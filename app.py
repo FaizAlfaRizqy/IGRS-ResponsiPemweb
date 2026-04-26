@@ -19,9 +19,9 @@ app.config['JSON_SORT_KEYS'] = False
 SOURCE_DIR = Path(__file__).resolve().parent / 'source'
 
 
-@app.route("/")
+@app.route('/')
 def index():
-    return "HELLO HIDUP"
+    return render_template('index.html')
 
 @app.route('/source/<path:filename>')
 def source_assets(filename):
