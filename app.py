@@ -17,10 +17,12 @@ app.config['JSON_SORT_KEYS'] = False
 SOURCE_DIR = Path(__file__).resolve().parent / 'source'
 
 
-@app.route('/')
+@app.route("/")
 def index():
-    """Render halaman utama"""
-    return render_template('index.html')
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        return f"ERROR: {e}"
 
 
 @app.route('/source/<path:filename>')
