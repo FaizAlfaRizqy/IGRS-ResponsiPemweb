@@ -100,7 +100,8 @@ function setupEvents() {
 
   if (backBtn) {
     backBtn.addEventListener('click', () => {
-      showPage('aspect');
+      resetWizardState();
+      showPage('home');
     });
   }
 
@@ -211,6 +212,37 @@ function collectInput() {
   });
 
   return { contentFlags, intensities };
+}
+
+function resetWizardState() {
+  currentAspectIndex = 0;
+
+  if (gameNameInput) {
+    gameNameInput.value = '';
+  }
+
+  Object.entries(ASPECT_CONFIG).forEach(([aspectKey, config]) => {
+    const checks = document.querySelectorAll(`input[name="${aspectKey}"]`);
+    checks.forEach((check) => {
+      check.checked = false;
+    });
+
+    const slider = document.getElementById(config.intensityId);
+    const valueEl = document.getElementById(config.valueId);
+    const wrapEl = document.getElementById(config.wrapId);
+
+    if (slider) {
+      slider.value = '5';
+    }
+    if (valueEl) {
+      valueEl.textContent = '5';
+    }
+    if (wrapEl) {
+      wrapEl.classList.add('hidden');
+    }
+  });
+
+  renderCurrentAspect();
 }
 
 async function handleSubmit() {

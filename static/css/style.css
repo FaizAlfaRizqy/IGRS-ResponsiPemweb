@@ -50,6 +50,10 @@ p {
   background: var(--page-bg);
 }
 
+#aspect-page {
+  position: relative;
+}
+
 .left-rail {
   background: var(--rail-bg);
   display: flex;
@@ -262,31 +266,38 @@ p {
 }
 
 .wizard-actions {
-  grid-column: 1 / -1;
+  position: absolute !important;
+  right: 24px;
+  bottom: 14px;
+  z-index: 999;
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  margin-top: 8px;
+  gap: 18px;
 }
 
 .prev-btn,
 .next-btn {
-  min-width: 108px;
-  height: 108px;
-  margin-top: auto;
+  min-width: 208px;
+  height: 74px;
   border: 0;
-  font-size: 24px;
+  border-radius: 999px;
+  padding: 0 22px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   cursor: pointer;
 }
 
 .prev-btn {
-  background: #c8c8cb;
-  color: #2f2f33;
+  background: #2ea3db;
+  color: #f8fdff;
 }
 
 .next-btn {
-  background: #9db3ad;
-  color: #e9f1ef;
+  background: #2ea3db;
+  color: #f8fdff;
 }
 
 .next-btn:disabled {
@@ -473,9 +484,9 @@ p {
 
   .prev-btn,
   .next-btn {
-    width: 86px;
-    height: 86px;
-    font-size: 42px;
+    min-width: 168px;
+    height: 62px;
+    font-size: 29px;
   }
 
   .current-value {
@@ -553,7 +564,17 @@ p {
   }
 
   .wizard-actions {
-    justify-content: space-between;
+    right: 12px;
+    bottom: 12px;
+    gap: 10px;
+  }
+
+  .prev-btn,
+  .next-btn {
+    min-width: 120px;
+    height: 50px;
+    padding: 0 14px;
+    font-size: 21px;
   }
 
   .aspect-panel h1 {
