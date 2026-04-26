@@ -13,11 +13,6 @@
   <main class="landing" id="home-page">
     <aside class="left-rail">
       <img src="/source/FAIZ-logo.png" alt="FAIZ Logo" class="faiz-logo" />
-      <nav class="side-nav">
-        <a href="#" class="is-active" data-nav="home">Home</a>
-        <a href="#" data-nav="aspect">How to Use</a>
-        <a href="#" data-nav="aspect">How it works</a>
-      </nav>
     </aside>
 
     <section class="center-image" aria-hidden="true">
@@ -49,11 +44,6 @@
   <main class="landing hidden" id="aspect-page">
     <aside class="left-rail">
       <img src="/source/FAIZ-logo.png" alt="FAIZ Logo" class="faiz-logo" />
-      <nav class="side-nav">
-        <a href="#" data-nav="home">Home</a>
-        <a href="#" class="is-active" data-nav="aspect">How to Use</a>
-        <a href="#" data-nav="aspect">How it works</a>
-      </nav>
     </aside>
 
     <section class="center-image" aria-hidden="true">
@@ -64,24 +54,78 @@
       <h1 id="aspect-heading">Kekerasan</h1>
 
       <form id="analyzer-form" class="aspect-form reveal">
-        <div class="option-list">
-          <label class="option-item"><input type="checkbox" name="violence" value="blood" /><span>Ada darah</span></label>
-          <label class="option-item"><input type="checkbox" name="violence" value="weapon" /><span>Ada senjata</span></label>
-          <label class="option-item"><input type="checkbox" name="violence" value="gore" /><span>Ada gore</span></label>
-          <label class="option-item"><input type="checkbox" name="violence" value="disturbing" /><span>Ada disturbing imagery</span></label>
-        </div>
-
-        <div class="intensity-wrap" id="violence-intensity-wrap">
-          <h2>Intensity</h2>
-          <input type="range" id="violence-intensity" name="violence-intensity" min="1" max="10" value="5" />
-          <div class="range-labels">
-            <strong>1</strong>
-            <strong>10</strong>
+        <div class="aspect-card" data-aspect="violence">
+          <h2>Kekerasan</h2>
+          <div class="option-list">
+            <label class="option-item"><input type="checkbox" name="violence" value="blood" /><span>Ada darah</span></label>
+            <label class="option-item"><input type="checkbox" name="violence" value="weapon" /><span>Ada senjata</span></label>
+            <label class="option-item"><input type="checkbox" name="violence" value="gore" /><span>Ada gore</span></label>
+            <label class="option-item"><input type="checkbox" name="violence" value="disturbing" /><span>Ada disturbing imagery</span></label>
           </div>
-          <strong id="violence-intensity-value" class="current-value">5</strong>
+          <div class="intensity-wrap" id="violence-intensity-wrap">
+            <h3>Intensity</h3>
+            <input type="range" id="violence-intensity" name="violence-intensity" min="1" max="10" value="5" />
+            <div class="range-labels">
+              <strong>1</strong>
+              <strong>10</strong>
+            </div>
+            <strong id="violence-intensity-value" class="current-value">5</strong>
+          </div>
         </div>
 
-        <button type="submit" class="next-btn" id="analyze-btn">1</button>
+        <div class="aspect-card" data-aspect="horror">
+          <h2>Horor</h2>
+          <div class="option-list">
+            <label class="option-item"><input type="checkbox" name="horror" value="jumpscare" /><span>Ada jumpscare</span></label>
+            <label class="option-item"><input type="checkbox" name="horror" value="monster" /><span>Ada monster</span></label>
+            <label class="option-item"><input type="checkbox" name="horror" value="disturbing" /><span>Ada disturbing imagery</span></label>
+          </div>
+          <div class="intensity-wrap hidden" id="horror-intensity-wrap">
+            <h3>Intensity</h3>
+            <input type="range" id="horror-intensity" name="horror-intensity" min="1" max="10" value="5" />
+            <div class="range-labels">
+              <strong>1</strong>
+              <strong>10</strong>
+            </div>
+            <strong id="horror-intensity-value" class="current-value">5</strong>
+          </div>
+        </div>
+
+        <div class="aspect-card" data-aspect="language">
+          <h2>Bahasa</h2>
+          <div class="option-list">
+            <label class="option-item"><input type="checkbox" name="language" value="bad_words" /><span>Ada kata kasar</span></label>
+            <label class="option-item"><input type="checkbox" name="language" value="heavy_profanity" /><span>Ada profanity berat</span></label>
+          </div>
+          <div class="intensity-wrap hidden" id="language-intensity-wrap">
+            <h3>Intensity</h3>
+            <input type="range" id="language-intensity" name="language-intensity" min="1" max="10" value="5" />
+            <div class="range-labels">
+              <strong>1</strong>
+              <strong>10</strong>
+            </div>
+            <strong id="language-intensity-value" class="current-value">5</strong>
+          </div>
+        </div>
+
+        <div class="aspect-card" data-aspect="sexual">
+          <h2>Seksual</h2>
+          <div class="option-list">
+            <label class="option-item"><input type="checkbox" name="sexual" value="suggestive" /><span>Ada konten sugestif</span></label>
+            <label class="option-item"><input type="checkbox" name="sexual" value="explicit" /><span>Ada konten eksplisit</span></label>
+          </div>
+          <div class="intensity-wrap hidden" id="sexual-intensity-wrap">
+            <h3>Intensity</h3>
+            <input type="range" id="sexual-intensity" name="sexual-intensity" min="1" max="10" value="5" />
+            <div class="range-labels">
+              <strong>1</strong>
+              <strong>10</strong>
+            </div>
+            <strong id="sexual-intensity-value" class="current-value">5</strong>
+          </div>
+        </div>
+
+        <button type="button" class="next-btn" id="next-btn">Next</button>
         <div id="loading" class="loading hidden">
           <span class="spinner"></span> Analyzing...
         </div>

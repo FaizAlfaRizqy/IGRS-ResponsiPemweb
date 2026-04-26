@@ -12,28 +12,55 @@ const aspectHeading = document.getElementById('aspect-heading');
 
 const form = document.getElementById('analyzer-form');
 const backBtn = document.getElementById('back-btn');
-const analyzeBtn = document.getElementById('analyze-btn');
+const nextBtn = document.getElementById('next-btn');
 const loadingEl = document.getElementById('loading');
 
-const violenceSlider = document.getElementById('violence-intensity');
-const violenceValue = document.getElementById('violence-intensity-value');
+const ASPECT_CONFIG = {
+  violence: {
+    intensityId: 'violence-intensity',
+    wrapId: 'violence-intensity-wrap',
+    valueId: 'violence-intensity-value'
+  },
+  horror: {
+    intensityId: 'horror-intensity',
+    wrapId: 'horror-intensity-wrap',
+    valueId: 'horror-intensity-value'
+  },
+  language: {
+    intensityId: 'language-intensity',
+    wrapId: 'language-intensity-wrap',
+    valueId: 'language-intensity-value'
+  },
+  sexual: {
+    intensityId: 'sexual-intensity',
+    wrapId: 'sexual-intensity-wrap',
+    valueId: 'sexual-intensity-value'
+  }
+};
+
 const navLinks = document.querySelectorAll('[data-nav]');
+const aspectOrder = ['violence', 'horror', 'language', 'sexual'];
+const aspectLabels = {
+  violence: 'Kekerasan',
+  horror: 'Horor',
+  language: 'Bahasa',
+  sexual: 'Seksual'
+};
+
+let currentAspectIndex = 0;
 
 setupEvents();
 showPage('home');
+setupConditionalInputs();
+renderCurrentAspect();
 
 function setupEvents() {
-  if (violenceSlider && violenceValue) {
-    violenceSlider.addEventListener('input', () => {
-      violenceValue.textContent = violenceSlider.value;
-    });
-  }
-
   if (gameSearchForm) {
     gameSearchForm.addEventListener('submit', (event) => {
       event.preventDefault();
 
       const gameName = gameNameInput ? gameNameInput.value.trim() : '';
+      currentAspectIndex = 0;
       if (gameName && aspectHeading) {
         aspectHeading.textContent = `Kekerasan - ${gameName}`;
       } else if (aspectHeading) {
@@ -41,13 +68,21 @@ function setupEvents() {
       }
 
       showPage('aspect');
+      renderCurrentAspect();
     });
   }
 
-  if (form) {
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      await handleSubmit();
+  if (nextBtn) {
+    nextBtn.addEventListener('click', async () => {
+      const isLastStep = currentAspectIndex === aspectOrder.length - 1;
+
+      if (isLastStep) {
+        await handleSubmit();
+        return;
+      }
+
+      currentAspectIndex += 1;
+      renderCurrentAspect();
     });
   }
 
@@ -65,9 +100,57 @@ function setupEvents() {
         showPage('home');
       }
       if (target === 'aspect') {
+        currentAspectIndex = 0;
+        renderCurrentAspect();
         showPage('aspect');
       }
     });
+  });
+}
+
+function renderCurrentAspect() {
+  const aspectCards = document.querySelectorAll('.aspect-card');
+  const currentAspectKey = aspectOrder[currentAspectIndex];
+
+  aspectCards.forEach((card) => {
+    const isCurrent = card.getAttribute('data-aspect') === currentAspectKey;
+    card.classList.toggle('step-hidden', !isCurrent);
+  });
+
+  if (aspectHeading) {
+    aspectHeading.textContent = aspectLabels[currentAspectKey] || 'Kekerasan';
+  }
+
+  if (nextBtn) {
+    nextBtn.textContent = currentAspectIndex === aspectOrder.length - 1 ? 'Analyze' : 'Next';
+  }
+}
+
+function setupConditionalInputs() {
+  Object.entries(ASPECT_CONFIG).forEach(([aspectKey, config]) => {
+    const checks = document.querySelectorAll(`input[name="${aspectKey}"]`);
+    const slider = document.getElementById(config.intensityId);
+    const valueEl = document.getElementById(config.valueId);
+    const wrapEl = document.getElementById(config.wrapId);
+
+    const updateVisibility = () => {
+      const active = Array.from(checks).some((check) => check.checked);
+      if (wrapEl) {
+        wrapEl.classList.toggle('hidden', !active);
+      }
+    };
+
+    checks.forEach((check) => {
+      check.addEventListener('change', updateVisibility);
+    });
+
+    if (slider && valueEl) {
+      slider.addEventListener('input', () => {
+        valueEl.textContent = slider.value;
+      });
+    }
+
+    updateVisibility();
   });
 }
 
@@ -92,17 +175,24 @@ function collectInput() {
     explicit: false
   };
 
-  const selected = Array.from(document.querySelectorAll('input[name="violence"]:checked'));
-  selected.forEach((item) => {
-    contentFlags[item.value] = true;
-  });
-
   const intensities = {
-    violence: selected.length > 0 ? Number(violenceSlider.value) : 0,
+    violence: 0,
     horror: 0,
     language: 0,
     sexual: 0
   };
+
+  Object.entries(ASPECT_CONFIG).forEach(([aspectKey, config]) => {
+    const checks = document.querySelectorAll(`input[name="${aspectKey}"]`);
+    const selected = Array.from(checks).filter((check) => check.checked);
+
+    selected.forEach((item) => {
+      contentFlags[item.value] = true;
+    });
+
+    const slider = document.getElementById(config.intensityId);
+    intensities[aspectKey] = selected.length > 0 ? Number(slider.value) : 0;
+  });
 
   return { contentFlags, intensities };
 }
@@ -111,7 +201,7 @@ async function handleSubmit() {
   try {
     const payload = collectInput();
 
-    analyzeBtn.disabled = true;
+    nextBtn.disabled = true;
     loadingEl.classList.remove('hidden');
 
     const response = await fetch('/api/analyze', {
@@ -133,7 +223,7 @@ async function handleSubmit() {
     console.error('Error:', error);
     alert('Error analyzing game rating: ' + error.message);
   } finally {
-    analyzeBtn.disabled = false;
+    nextBtn.disabled = false;
     loadingEl.classList.add('hidden');
   }
 }
